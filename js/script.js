@@ -139,4 +139,48 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', showModalByScroll);
+
+    // Constructor menu
+
+    const Obj = {
+        'img': ['img/tabs/vegy.jpg', 'img/tabs/elite.jpg', 'img/tabs/post.jpg'],
+        'title': ['Меню "Фитнес', 'Меню “Премиум', 'Меню "Постное'],
+        'text': ['Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', ' меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.'],
+        'price': ['229', '550', '430']
+    }
+
+    const menuItem = document.querySelector('.menu__field'),
+        menuImg = menuItem.querySelectorAll('img'),
+        menuTitle = document.querySelectorAll('.menu__item-subtitle'),
+        menuText = document.querySelectorAll('.menu__item-descr'),
+        menuPrice = menuItem.querySelectorAll('span');
+
+    class constructorMenu {
+        constructor(img, title, text, price) {
+            this.img = img;
+            this.title = title;
+            this.text = text;
+            this.price = price;
+        }
+
+        import(i) {
+            menuImg[i].src = this.img;
+            menuTitle[i].innerText = this.title;
+            menuText[i].innerText = this.text;
+            menuPrice[i].innerText = this.price;
+        }
+    }
+
+    for (let i = 0; i < 3; i++) {
+        if (i == 0) {
+            const menuOne = new constructorMenu(Obj.img[i], Obj.title[i], Obj.text[i], Obj.price[i]);
+            menuOne.import(i);
+        } else if (i == 1) {
+            const menuTwo = new constructorMenu(Obj.img[i], Obj.title[i], Obj.text[i], Obj.price[i]);
+            menuTwo.import(i);
+        } else if (i == 2) {
+            const menuThree = new constructorMenu(Obj.img[i], Obj.title[i], Obj.text[i], Obj.price[i]);
+            menuThree.import(i);
+        }
+    }
 });
