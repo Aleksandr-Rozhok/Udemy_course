@@ -1,0 +1,22 @@
+{
+  "name": "food_site",
+  "version": "1.0.0",
+  "description": "learning udemy course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleksandr-Rozhok/Udemy_course.git"
+  },
+  "author": "aleksandr rozhok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aleksandr-Rozhok/Udemy_course/issues"
+  },
+  "homepage": "https://github.com/Aleksandr-Rozhok/Udemy_course#readme",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}
