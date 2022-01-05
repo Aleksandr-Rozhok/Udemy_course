@@ -287,12 +287,11 @@ window.addEventListener('DOMContentLoaded', () => {
         totalSlide = counterSlider.querySelector('#total'),
         leftButtonSlider = document.querySelector('.offer__slider-prev'),
         rightButtonSlider = document.querySelector('.offer__slider-next');
-
+    let counter = 0;
 
 
     getResourse('http://localhost:3000/slider')
         .then(data => {
-            let counter = 0;
 
             renderCounter(data[counter].id, data.length);
 
@@ -306,14 +305,13 @@ window.addEventListener('DOMContentLoaded', () => {
                 renderCounter(data[counter].id, data.length);
 
                 renderSlider(data[counter].src, data[counter].alt);
-                console.log(data[counter].id);
             });
 
 
             leftButtonSlider.addEventListener('click', () => {
                 counter--;
-                if (counter == -1) {
-                    counter = data.length;
+                if (counter === -1) {
+                    counter = data.length - 1;
                 }
                 renderCounter(data[counter].id, data.length);
 
@@ -322,7 +320,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
 
     const renderCounter = (num, lastNum) => {
-        if (lastNum > 10) {
+        if (lastNum < 10) {
             totalSlide.innerText = `0${lastNum}`;
             currentSlide.innerText = `0${num}`;
         } else {

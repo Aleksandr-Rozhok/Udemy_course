@@ -29,22 +29,22 @@
     {
       "src": "img/slider/pepper.jpg",
       "alt": "pepper",
-      "id": 1
+      "id": 0
     },
     {
       "src": "img/slider/food-12.jpg",
       "alt": "food",
-      "id": 2
+      "id": 1
     },
     {
       "src": "img/slider/olive-oil.jpg",
       "alt": "oil",
-      "id": 3
+      "id": 2
     },
     {
       "src": "img/slider/paprika.jpg",
       "alt": "paprika",
-      "id": 4
+      "id": 3
     }
   ]
 }
