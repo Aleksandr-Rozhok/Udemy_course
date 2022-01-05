@@ -199,7 +199,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
-        })
+        });
 
     // Forms
 
@@ -224,7 +224,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         return await res.json();
-    }
+    };
 
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
@@ -251,7 +251,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     showThanksModal(messages.failure);
                 }).finally(() => {
                     form.reset();
-                })
+                });
         });
     }
 
@@ -277,7 +277,7 @@ window.addEventListener('DOMContentLoaded', () => {
             prevThanksModal.classList.remove('hide');
             closeModalWindow();
         }, 2000);
-    };
+    }
 
     // Slider
 
@@ -287,11 +287,14 @@ window.addEventListener('DOMContentLoaded', () => {
         totalSlide = counterSlider.querySelector('#total'),
         leftButtonSlider = document.querySelector('.offer__slider-prev'),
         rightButtonSlider = document.querySelector('.offer__slider-next');
-    let counter = 0;
+    let counter = 0,
+        arrDots = {};
 
 
     getResourse('http://localhost:3000/slider')
         .then(data => {
+
+            renderDots(data.length);
 
             renderCounter(data[counter].id, data.length);
 
@@ -304,7 +307,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
                 renderCounter(data[counter].id, data.length);
 
+                removeActiveClass(counter);
+                addActiveClass(counter);
+
                 renderSlider(data[counter].src, data[counter].alt);
+
             });
 
 
@@ -315,9 +322,24 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
                 renderCounter(data[counter].id, data.length);
 
+                removeActiveClass(counter);
+                addActiveClass(counter);
+
                 renderSlider(data[counter].src, data[counter].alt);
+
             });
-        })
+
+            arrDots.forEach((item, i) => {
+                item.addEventListener('click', () => {
+                    arrDots.forEach((item) => {
+                        item.classList.remove('activeDots');
+                    })
+                    addActiveClass(i);
+                    renderCounter(data[i].id, data.length);
+                    renderSlider(data[i].src, data[i].alt);
+                });
+            });
+        });
 
     const renderCounter = (num, lastNum) => {
         if (lastNum < 10) {
@@ -326,8 +348,8 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             totalSlide.innerText = lastNum;
             currentSlide.innerText = num;
-        };
-    }
+        }
+    };
 
     const slide = document.createElement('div');
     slide.classList.add(`slide`);
@@ -339,6 +361,40 @@ window.addEventListener('DOMContentLoaded', () => {
                     </div>
                   `;
         parentSlider.append(slide);
-    }
+    };
+
+    // Dots slider
+
+    const carouselIndicators = document.querySelector('.carousel-indicators');
+
+    const renderDots = (countSlides) => {
+        for (let i = 0; i < countSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot', `dot-${i}`);
+            carouselIndicators.append(dot);
+        }
+
+        arrDots = (document.querySelectorAll('.dot'));
+        addActiveClass(0);
+    };
+
+    const addActiveClass = (counter) => {
+        arrDots[counter].classList.add('activeDots');
+        console.log(counter);
+    };
+
+    const removeActiveClass = (counter) => {
+        console.log(arrDots.length);
+        if (counter == 0) {
+            arrDots[arrDots.length - 1].classList.remove('activeDots');
+            arrDots[counter + 1].classList.remove('activeDots');
+        } else if (counter == arrDots.length - 1) {
+            arrDots[counter - 1].classList.remove('activeDots');
+            arrDots[0].classList.remove('activeDots');
+        } else {
+            arrDots[counter - 1].classList.remove('activeDots');
+            arrDots[counter + 1].classList.remove('activeDots');
+        }
+    };
 
 });
