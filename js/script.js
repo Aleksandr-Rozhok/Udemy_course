@@ -277,5 +277,70 @@ window.addEventListener('DOMContentLoaded', () => {
             prevThanksModal.classList.remove('hide');
             closeModalWindow();
         }, 2000);
+    };
+
+    // Slider
+
+    const parentSlider = document.querySelector('.offer__slider-wrapper'),
+        counterSlider = document.querySelector('.offer__slider-counter'),
+        currentSlide = counterSlider.querySelector('#current'),
+        totalSlide = counterSlider.querySelector('#total'),
+        leftButtonSlider = document.querySelector('.offer__slider-prev'),
+        rightButtonSlider = document.querySelector('.offer__slider-next');
+
+
+
+    getResourse('http://localhost:3000/slider')
+        .then(data => {
+            let counter = 0;
+
+            renderCounter(data[counter].id, data.length);
+
+            renderSlider(data[counter].src, data[counter].alt);
+
+            rightButtonSlider.addEventListener('click', () => {
+                counter++;
+                if (counter == data.length) {
+                    counter = 0;
+                }
+                renderCounter(data[counter].id, data.length);
+
+                renderSlider(data[counter].src, data[counter].alt);
+                console.log(data[counter].id);
+            });
+
+
+            leftButtonSlider.addEventListener('click', () => {
+                counter--;
+                if (counter == -1) {
+                    counter = data.length;
+                }
+                renderCounter(data[counter].id, data.length);
+
+                renderSlider(data[counter].src, data[counter].alt);
+            });
+        })
+
+    const renderCounter = (num, lastNum) => {
+        if (lastNum > 10) {
+            totalSlide.innerText = `0${lastNum}`;
+            currentSlide.innerText = `0${num}`;
+        } else {
+            totalSlide.innerText = lastNum;
+            currentSlide.innerText = num;
+        };
     }
+
+    const slide = document.createElement('div');
+    slide.classList.add(`slide`);
+
+    const renderSlider = (src, alt) => {
+        slide.innerHTML = `
+                  <div class="offer__slide">
+                        <img src=${src} alt=${alt}>
+                    </div>
+                  `;
+        parentSlider.append(slide);
+    }
+
 });

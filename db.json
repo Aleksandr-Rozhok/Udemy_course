@@ -23,30 +23,28 @@
     }
   ],
   "requests": [
+    
+  ],
+  "slider": [
     {
-      "name": "admin",
-      "phone": "+375 (29) 557-71-64",
+      "src": "img/slider/pepper.jpg",
+      "alt": "pepper",
       "id": 1
     },
     {
-      "name": "manager",
-      "phone": "+375 (29) 557-71-64",
+      "src": "img/slider/food-12.jpg",
+      "alt": "food",
       "id": 2
     },
     {
-      "name": "Намогильные вазы для церемонии похорон",
-      "phone": "+375 (29) 557-71-64",
+      "src": "img/slider/olive-oil.jpg",
+      "alt": "oil",
       "id": 3
     },
     {
-      "name": "manager",
-      "phone": "+375 (29) 557-71-64",
+      "src": "img/slider/paprika.jpg",
+      "alt": "paprika",
       "id": 4
-    },
-    {
-      "name": "Click_number",
-      "phone": "+375 (29) 557-71-64",
-      "id": 5
     }
   ]
 }
