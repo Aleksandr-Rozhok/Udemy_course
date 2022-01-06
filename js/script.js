@@ -416,17 +416,46 @@ window.addEventListener('DOMContentLoaded', () => {
     sliderInner.style.transition = '0.5s';
     sliderWrapper.style.overflow = 'hidden';
 
-    if (slides.length < 10) {
-        total.textContent = `0${slides.length}`;
-    } else {
-        total.textContent = slides.length;
-    }
+    const examinationSlides = () => {
+        if (slides.length < 10) {
+            total.textContent = `0${slides.length}`;
+        } else {
+            total.textContent = slides.length;
+        }
 
-    if (slides.length < 10) {
-        current.textContent = `0${slideIndex}`;
-    } else {
-        current.textContent = slideIndex;
-    }
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    };
+
+    const activeDot = () => {
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
+    };
+
+    const examinationOffsetNext = (slides) => {
+        if (offset == +width.replace(/\D/g, '') * (slides - 1)) {
+            offset = 0;
+        } else {
+            offset += +width.replace(/\D/g, '');
+        }
+
+        sliderInner.style.transform = `translateX(-${offset}px)`;
+    };
+
+    const examinationOffsetPrev = (slides) => {
+        if (offset == 0) {
+            offset = +width.replace(/\D/g, '') * (slides - 1);
+        } else {
+            offset -= +width.replace(/\D/g, '');
+        }
+
+        sliderInner.style.transform = `translateX(-${offset}px)`;
+    };
+
+    examinationSlides();
 
     slider.style.position = 'relative';
 
@@ -447,11 +476,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     next.addEventListener('click', () => {
-        if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
-            offset = 0;
-        } else {
-            offset += +width.slice(0, width.length - 2);
-        }
+        examinationOffsetNext(slides.length);
 
         if (slideIndex == slides.length) {
             slideIndex = 1;
@@ -459,24 +484,13 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex++;
         }
 
-        if (slides.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
+        examinationSlides();
 
-        dots.forEach(dot => dot.style.opacity = '.5');
-        dots[slideIndex - 1].style.opacity = 1;
-
-        sliderInner.style.transform = `translateX(-${offset}px)`;
+        activeDot();
     });
 
     prev.addEventListener('click', () => {
-        if (offset == 0) {
-            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
-        } else {
-            offset -= +width.slice(0, width.length - 2);
-        }
+        examinationOffsetPrev(slides.length);
 
         if (slideIndex == 1) {
             slideIndex = slides.length;
@@ -484,16 +498,9 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex--;
         }
 
-        if (slides.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
+        examinationSlides();
 
-        dots.forEach(dot => dot.style.opacity = '.5');
-        dots[slideIndex - 1].style.opacity = 1;
-
-        sliderInner.style.transform = `translateX(-${offset}px)`;
+        activeDot();
     });
 
     dots.forEach(dot => {
@@ -501,18 +508,13 @@ window.addEventListener('DOMContentLoaded', () => {
             const sliderTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = sliderTo;
-            offset = offset = +width.slice(0, width.length - 2) * (sliderTo - 1);
+            offset = width.replace(/\D/g, '') * (sliderTo - 1);
 
             sliderInner.style.transform = `translateX(-${offset}px)`;
 
-            dots.forEach(dot => dot.style.opacity = '.5');
-            dots[slideIndex - 1].style.opacity = 1;
+            activeDot();
 
-            if (slides.length < 10) {
-                current.textContent = `0${slideIndex}`;
-            } else {
-                current.textContent = slideIndex;
-            }
+            examinationSlides();
         });
     });
 
