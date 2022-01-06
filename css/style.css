@@ -751,6 +751,7 @@ a {
 }
 
 .carousel-indicators {
+    position: absolute;
     background-color: transparent;
     right: 0;
     bottom: 0;
@@ -772,7 +773,7 @@ a {
     margin-right: 3px;
     margin-left: 3px;
     cursor: pointer;
-    background-color: #000;
+    background-color: #fff;
     background-clip: padding-box;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
