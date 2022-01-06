@@ -281,120 +281,172 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Slider
 
-    const parentSlider = document.querySelector('.offer__slider-wrapper'),
-        counterSlider = document.querySelector('.offer__slider-counter'),
-        currentSlide = counterSlider.querySelector('#current'),
-        totalSlide = counterSlider.querySelector('#total'),
-        leftButtonSlider = document.querySelector('.offer__slider-prev'),
-        rightButtonSlider = document.querySelector('.offer__slider-next');
-    let counter = 0,
-        arrDots = {};
+    // const parentSlider = document.querySelector('.offer__slider-wrapper'),
+    //     counterSlider = document.querySelector('.offer__slider-counter'),
+    //     currentSlide = counterSlider.querySelector('#current'),
+    //     totalSlide = counterSlider.querySelector('#total'),
+    //     leftButtonSlider = document.querySelector('.offer__slider-prev'),
+    //     rightButtonSlider = document.querySelector('.offer__slider-next');
+    // let counter = 0,
+    //     arrDots = {};
 
 
-    getResourse('http://localhost:3000/slider')
-        .then(data => {
+    // getResourse('http://localhost:3000/slider')
+    //     .then(data => {
 
-            renderDots(data.length);
+    //         renderDots(data.length);
 
-            renderCounter(data[counter].id, data.length);
+    //         renderCounter(data[counter].id, data.length);
 
-            renderSlider(data[counter].src, data[counter].alt);
+    //         renderSlider(data[counter].src, data[counter].alt);
 
-            rightButtonSlider.addEventListener('click', () => {
-                counter++;
-                if (counter == data.length) {
-                    counter = 0;
-                }
-                renderCounter(data[counter].id, data.length);
+    //         rightButtonSlider.addEventListener('click', () => {
+    //             counter++;
+    //             if (counter == data.length) {
+    //                 counter = 0;
+    //             }
+    //             renderCounter(data[counter].id, data.length);
 
-                removeActiveClass(counter);
-                addActiveClass(counter);
+    //             removeActiveClass(counter);
+    //             addActiveClass(counter);
 
-                renderSlider(data[counter].src, data[counter].alt);
+    //             renderSlider(data[counter].src, data[counter].alt);
 
-            });
+    //         });
 
 
-            leftButtonSlider.addEventListener('click', () => {
-                counter--;
-                if (counter === -1) {
-                    counter = data.length - 1;
-                }
-                renderCounter(data[counter].id, data.length);
+    //         leftButtonSlider.addEventListener('click', () => {
+    //             counter--;
+    //             if (counter === -1) {
+    //                 counter = data.length - 1;
+    //             }
+    //             renderCounter(data[counter].id, data.length);
 
-                removeActiveClass(counter);
-                addActiveClass(counter);
+    //             removeActiveClass(counter);
+    //             addActiveClass(counter);
 
-                renderSlider(data[counter].src, data[counter].alt);
+    //             renderSlider(data[counter].src, data[counter].alt);
 
-            });
+    //         });
 
-            arrDots.forEach((item, i) => {
-                item.addEventListener('click', () => {
-                    arrDots.forEach((item) => {
-                        item.classList.remove('activeDots');
-                    })
-                    addActiveClass(i);
-                    renderCounter(data[i].id, data.length);
-                    renderSlider(data[i].src, data[i].alt);
-                });
-            });
+    //         arrDots.forEach((item, i) => {
+    //             item.addEventListener('click', () => {
+    //                 arrDots.forEach((item) => {
+    //                     item.classList.remove('activeDots');
+    //                 })
+    //                 addActiveClass(i);
+    //                 renderCounter(data[i].id, data.length);
+    //                 renderSlider(data[i].src, data[i].alt);
+    //             });
+    //         });
+    //     });
+
+    // const renderCounter = (num, lastNum) => {
+    //     if (lastNum < 10) {
+    //         totalSlide.innerText = `0${lastNum}`;
+    //         currentSlide.innerText = `0${num}`;
+    //     } else {
+    //         totalSlide.innerText = lastNum;
+    //         currentSlide.innerText = num;
+    //     }
+    // };
+
+    // const slide = document.createElement('div');
+    // slide.classList.add(`slide`);
+
+    // const renderSlider = (src, alt) => {
+    //     slide.innerHTML = `
+    //               <div class="offer__slide">
+    //                     <img src=${src} alt=${alt}>
+    //                 </div>
+    //               `;
+    //     parentSlider.append(slide);
+    // };
+
+    // // Dots slider
+
+    // const carouselIndicators = document.querySelector('.carousel-indicators');
+
+    // const renderDots = (countSlides) => {
+    //     for (let i = 0; i < countSlides; i++) {
+    //         const dot = document.createElement('div');
+    //         dot.classList.add('dot', `dot-${i}`);
+    //         carouselIndicators.append(dot);
+    //     }
+
+    //     arrDots = (document.querySelectorAll('.dot'));
+    //     addActiveClass(0);
+    // };
+
+    // const addActiveClass = (counter) => {
+    //     arrDots[counter].classList.add('activeDots');
+    //     console.log(counter);
+    // };
+
+    // const removeActiveClass = (counter) => {
+    //     console.log(arrDots.length);
+    //     if (counter == 0) {
+    //         arrDots[arrDots.length - 1].classList.remove('activeDots');
+    //         arrDots[counter + 1].classList.remove('activeDots');
+    //     } else if (counter == arrDots.length - 1) {
+    //         arrDots[counter - 1].classList.remove('activeDots');
+    //         arrDots[0].classList.remove('activeDots');
+    //     } else {
+    //         arrDots[counter - 1].classList.remove('activeDots');
+    //         arrDots[counter + 1].classList.remove('activeDots');
+    //     }
+    // };
+
+    // Teachers version slider 1
+
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+    let slideIndex = 1;
+
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = slides.length;
+    }
+
+    function showSlides(n) {
+        if (n < 1) {
+            slideIndex = slides.length - 1;
+        }
+
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+
+        slides.forEach(item => {
+            item.style.display = 'none';
         });
+        slides[slideIndex - 1].style.display = 'block';
 
-    const renderCounter = (num, lastNum) => {
-        if (lastNum < 10) {
-            totalSlide.innerText = `0${lastNum}`;
-            currentSlide.innerText = `0${num}`;
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
         } else {
-            totalSlide.innerText = lastNum;
-            currentSlide.innerText = num;
+            current.textContent = slideIndex;
         }
-    };
+    }
 
-    const slide = document.createElement('div');
-    slide.classList.add(`slide`);
+    function plusIndex(n) {
+        slideIndex += n;
+    }
 
-    const renderSlider = (src, alt) => {
-        slide.innerHTML = `
-                  <div class="offer__slide">
-                        <img src=${src} alt=${alt}>
-                    </div>
-                  `;
-        parentSlider.append(slide);
-    };
+    prev.addEventListener('click', () => {
+        plusIndex(-1);
+        showSlides(slideIndex);
+    });
 
-    // Dots slider
-
-    const carouselIndicators = document.querySelector('.carousel-indicators');
-
-    const renderDots = (countSlides) => {
-        for (let i = 0; i < countSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot', `dot-${i}`);
-            carouselIndicators.append(dot);
-        }
-
-        arrDots = (document.querySelectorAll('.dot'));
-        addActiveClass(0);
-    };
-
-    const addActiveClass = (counter) => {
-        arrDots[counter].classList.add('activeDots');
-        console.log(counter);
-    };
-
-    const removeActiveClass = (counter) => {
-        console.log(arrDots.length);
-        if (counter == 0) {
-            arrDots[arrDots.length - 1].classList.remove('activeDots');
-            arrDots[counter + 1].classList.remove('activeDots');
-        } else if (counter == arrDots.length - 1) {
-            arrDots[counter - 1].classList.remove('activeDots');
-            arrDots[0].classList.remove('activeDots');
-        } else {
-            arrDots[counter - 1].classList.remove('activeDots');
-            arrDots[counter + 1].classList.remove('activeDots');
-        }
-    };
+    next.addEventListener('click', () => {
+        plusIndex(1);
+        showSlides(slideIndex);
+    });
 
 });
