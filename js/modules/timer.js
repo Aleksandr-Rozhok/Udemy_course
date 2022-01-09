@@ -1,10 +1,9 @@
-function timer() {
-    const deadline = '2022-01-01';
+function timer(id, deadline) {
 
-    const getTimerRemaining = (endtime) => {
+    const getTimerRemaining = (endTime) => {
 
-        const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor(t / (1000 * 60 * 60 * 24) % 24),
+        const t = Date.parse(endTime) - Date.parse(new Date()),
+            days = Math.floor(t / (1000 * 60 * 60 * 24)),
             hours = Math.floor(t / (1000 * 60 * 60) % 24),
             minutes = Math.floor(t / (1000 * 60) % 60),
             seconds = Math.floor(t / 1000 % 60);
@@ -18,7 +17,7 @@ function timer() {
         };
     };
 
-    const getClock = (selector, endtime) => {
+    const getClock = (selector, endTime) => {
 
         const timer = document.querySelector(selector),
             days = timer.querySelector('#days'),
@@ -39,7 +38,7 @@ function timer() {
 
         function updateCLock() {
 
-            const t = getTimerRemaining(endtime);
+            const t = getTimerRemaining(endTime);
 
             days.innerText = getZero(t.days);
             hours.innerText = getZero(t.hours);
@@ -52,7 +51,7 @@ function timer() {
         }
     };
 
-    getClock('.timer', deadline);
+    getClock(id, deadline);
 }
 
-module.exports = timer;
+export default timer;

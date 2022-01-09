@@ -1,4 +1,13 @@
-function slider() {
+function slider({
+    container,
+    slidesSelector,
+    prevArrowSelector,
+    nextArrowSelector,
+    totalCounterSelector,
+    currentCounterSelector,
+    sliderWrapperSelector,
+    sliderInnerSelector
+}) {
     // const parentSlider = document.querySelector('.offer__slider-wrapper'),
     //     counterSlider = document.querySelector('.offer__slider-counter'),
     //     currentSlide = counterSlider.querySelector('#current'),
@@ -9,7 +18,7 @@ function slider() {
     //     arrDots = {};
 
 
-    // getResourse('http://localhost:3000/slider')
+    // getResource('http://localhost:3000/slider')
     //     .then(data => {
 
     //         renderDots(data.length);
@@ -117,14 +126,14 @@ function slider() {
 
     // Teachers version slider 1
 
-    const slides = document.querySelectorAll('.offer__slide'),
-        slider = document.querySelector('.offer__slider'),
-        prev = document.querySelector('.offer__slider-prev'),
-        next = document.querySelector('.offer__slider-next'),
-        total = document.querySelector('#total'),
-        current = document.querySelector('#current'),
-        sliderWrapper = document.querySelector('.offer__slider-wrapper'),
-        sliderInner = document.querySelector('.offer__slider-inner'),
+    const slides = document.querySelectorAll(slidesSelector),
+        slider = document.querySelector(container),
+        prev = document.querySelector(prevArrowSelector),
+        next = document.querySelector(nextArrowSelector),
+        total = document.querySelector(totalCounterSelector),
+        current = document.querySelector(currentCounterSelector),
+        sliderWrapper = document.querySelector(sliderWrapperSelector),
+        sliderInner = document.querySelector(sliderInnerSelector),
         width = window.getComputedStyle(sliderWrapper).width;
     let slideIndex = 1;
     let offset = 0;
@@ -280,4 +289,4 @@ function slider() {
     // });
 }
 
-module.exports = slider;
+export default slider;
